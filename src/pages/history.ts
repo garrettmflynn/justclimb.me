@@ -11,7 +11,6 @@ export class HistoryPage extends CommonElement {
 
     list() {
         const dates = Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i )) as string[]
-        console.log(dates)
 
         const container = document.createElement('div')
 
