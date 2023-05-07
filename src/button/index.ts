@@ -15,14 +15,7 @@ class ButtonComponent extends CommonElement {
 
     button () {
         const button = document.createElement("button")
-        button.style.width = button.style.height = '100px'
-        button.style.border = '1px solid black'
-        button.style.borderRadius = '10px'
-        button.style.fontWeight = 'bold'
-        button.style.margin = '10px'
-        button.style.background = 'whitesmoke'
-        button.style.cursor = 'pointer'
-
+        button.classList.add('grade')
         button.textContent = this.grade
         button.addEventListener("click", () => this.onClick(true))
         return button

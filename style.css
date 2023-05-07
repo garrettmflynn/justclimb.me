@@ -4,7 +4,7 @@ html, body {
 }
 
 section {
-    padding: 25px 50px;
+    padding: 25px;
 }
 
 nav {
@@ -50,4 +50,15 @@ li {
 
 li:last-of-type {
     border-bottom: 1px solid gainsboro
+}
+
+.grade {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 10px;
+    background: whitesmoke;
+    cursor: pointer;
 }

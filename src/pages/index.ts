@@ -18,21 +18,32 @@ class PageComponent extends CommonElement {
         const header = document.createElement('h2')
         header.innerText = this.header
 
+        const active = window.location.pathname.split('/').filter(v => v)[0].replaceAll('#', '')
+
         const links = document.createElement('div')
-        links.append(...this.pages.map(({ label, element }, i) => {
+        const linkEls = this.pages.map(({ label, element }, i) => {
             const a = document.createElement('a')
-            a.style.paddingLeft = '15px'
+            a.style.marginLeft = '15px'
             a.href = '#'
             a.innerText = label
+
+            const path = label.toLowerCase()
             a.onclick = () => {
                 const body = this.body()
                 const child = body.children[0]
                 if (!child) body.append(element)
                 else child.replaceWith(element)
+                window.history.pushState({}, null, path)
             }
-            if (i === 0) a.click() // Click the first link
+            
+            if (i === 0)  header.onclick = a.onclick
+            if (path === active) a.click()
             return a
-        }))
+        })
+
+        if (!active) linkEls[0].click()
+
+        links.append(...linkEls)
 
         nav.append(header, links)
 
