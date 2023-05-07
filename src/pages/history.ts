@@ -10,7 +10,9 @@ export class HistoryPage extends CommonElement {
     }
 
     list() {
-        const dates = Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i )) as string[]
+        const dates = Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i ))
+        .filter(str => str?.split('-').length === 3)
+        .sort((o1,o2) => new Date(o2) - new Date(o1)) as string[] // Sort dates chronologically
 
         const container = document.createElement('div')
 

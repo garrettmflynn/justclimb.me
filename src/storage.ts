@@ -11,7 +11,7 @@ export const get = (key?: string): EntryType[] => {
     else return JSON.parse(entries)
 }
 
-export const set = (key: string, entries: any[]) => {
+export const set = (key: string, entries: any | any[]) => {
     localStorage.setItem(key, JSON.stringify(entries))
 }
 

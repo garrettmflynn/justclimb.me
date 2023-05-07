@@ -1,6 +1,7 @@
 import { CommonElement, Commons } from '../../external/commonwealth/index.js'
 import ButtonComponent from '../button/index.js'
 import HistoryComponent from '../history/index.js'
+import { defaultGradeRange } from './settings.js'
 
 
 export class ScorePage extends CommonElement {
@@ -15,11 +16,17 @@ export class ScorePage extends CommonElement {
     history = () => this.#history // Only ever render the same component (fixes re-rendering issue)
 
     buttons = () => {
-        const container = document.createElement('div')
-        container.style.textAlign = 'center'
 
-        const grades = Array.from({length: 18}, (_, i) => `V${i}`)
-        const buttons = grades.map(grade => new ButtonComponent({ grade }))
+        let range = localStorage.getItem('gradeRange') || defaultGradeRange
+        const container = document.createElement('div')
+        container.classList.add('grades')
+
+        const grades = Array.from({length: parseInt(range) + 1}, (_, i) => `V${i}`)
+        const buttons = grades.map(grade => {
+            const gradeEl = new ButtonComponent({ grade })
+            gradeEl.classList.add('grade')
+            return gradeEl
+        })
 
         const commons = new Commons()
 

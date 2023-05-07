@@ -18,15 +18,14 @@ class PageComponent extends CommonElement {
         const header = document.createElement('h2')
         header.innerText = this.header
 
-        // NOTE: Assumes depth of one
-        const got = window.location.pathname.split('/').filter(v => v).slice(-1)[0]
-        const active = got ? got.replaceAll('#', '') : ''
+        const params = new URLSearchParams(window.location.search)
+        const active = params.get('page')
 
         const links = document.createElement('div')
         const linkEls = this.pages.map(({ label, element }, i) => {
             const a = document.createElement('a')
             a.style.marginLeft = '15px'
-            a.href = '#'
+            a.href = 'javascript:undefined'
             a.innerText = label
 
             const path = label.toLowerCase()
@@ -35,7 +34,7 @@ class PageComponent extends CommonElement {
                 const child = body.children[0]
                 if (!child) body.append(element)
                 else child.replaceWith(element)
-                window.history.pushState({}, null, path)
+                window.history.pushState({}, '', `?page=${path}`)
             }
             
             if (i === 0)  header.onclick = a.onclick

@@ -15,7 +15,6 @@ class ButtonComponent extends CommonElement {
 
     button () {
         const button = document.createElement("button")
-        button.classList.add('grade')
         button.textContent = this.grade
         button.addEventListener("click", () => this.onClick(true))
         return button
