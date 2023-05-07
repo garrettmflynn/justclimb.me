@@ -19,7 +19,8 @@ class PageComponent extends CommonElement {
         header.innerText = this.header
 
         // NOTE: Assumes depth of one
-        const active = window.location.pathname.split('/').filter(v => v).slice(-1)[0].replaceAll('#', '')
+        const got = window.location.pathname.split('/').filter(v => v).slice(-1)[0]
+        const active = got ? got.replaceAll('#', '') : ''
 
         const links = document.createElement('div')
         const linkEls = this.pages.map(({ label, element }, i) => {
