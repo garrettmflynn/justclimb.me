@@ -55,20 +55,21 @@ li:last-of-type {
 .grades {
     display: flex;
     flex-wrap: wrap;
-    padding: 0px 50px;
 }
 
 .grade {
-    aspect-ratio: 1 / 1;
+    /* aspect-ratio: 1 / 1; */
     margin: 10px;
     flex: 1 0 30%;
     display: flex;
+    height: 150px;
 }
 
 .grade button {
     border: 1px solid black;
     border-radius: 10px;
     flex-grow: 1;
+    font-size: 20px;
     font-weight: bold;
     background: whitesmoke;
     cursor: pointer;
