@@ -1,73 +1,59 @@
 // import * as todo from './funcs'
 import { CommonElement } from "../../external/commonwealth/index";
-
-const get = (key?: string) => {
-    if (!key) return []
-    let entries = localStorage.getItem(key) || []
-    if (typeof entries === 'string') entries = JSON.parse(entries)
-    return entries
-}
-
-const set = (key: string, entries: any[]) => {
-    localStorage.setItem(key, JSON.stringify(entries))
-}
-
-const getToday = () => new Date().toISOString().split('T')[0]
+import { listItem } from "../components/li";
+import { EntryType } from "../storage";
+import * as storage from '../storage'
 
 class HistoryComponent extends CommonElement {
-    constructor(info: any) {
+    constructor(info?: any) {
         super(info)
+        this.latest = storage.getToday()
     }
 
-    get = get
+    get = storage.get
 
-    add(key, value) {
+    add(key: string, value: any) {
 
         if (key && value){
 
-            let entries = get(key) // Will only pull, no updates
+            let entries = storage.get(key) // Will only pull, no updates
 
             entries.push({
                 value,
                 timestamp: (new Date()).toLocaleTimeString('en-US')
             })
 
-            set(key, entries)   
+            storage.set(key, entries)   
             this.list(true) // Trigger a re-render of the list         
         }
     }
 
-    addToday(value) {
-        const key = getToday()
-        this.add(key, value)
+    addToday(value: any) {
+        this.add(storage.today(), value)
     }
 
-    latest = [] // Can listen for the latest entries
+    latest: EntryType[] = [] // Can listen for the latest entries
 
-    list() {
+    list(trigger: any) {
         const list = document.createElement("ul");
 
-        const currentTime = getToday()
-        const currentEntries = this.latest = get(currentTime)
+        const currentEntries = this.latest = storage.getToday()
 
         list.innerHTML = "";
         currentEntries.forEach((entry, index) => {
-            const listItem = document.createElement("li");
-            const label = document.createElement("label");
-            label.appendChild(document.createTextNode(entry.timestamp));
-            label.appendChild(document.createTextNode(": " + entry.value));
-            listItem.style.cursor = 'delete'
+            const item = listItem(entry)
+
             const deleteButton = document.createElement('button')
             deleteButton.innerHTML = 'Delete'
             deleteButton.style.marginLeft = '10px'
             deleteButton.onclick = () => {
                 currentEntries.splice(index, 1)
-                set(currentTime, currentEntries) 
+                storage.set(storage.today(), currentEntries) 
                 this.list(true) // Trigger a re-render of the list           
             }
-            listItem.appendChild(label);
-            listItem.appendChild(deleteButton)
-            list.appendChild(listItem);
+
+            item.appendChild(deleteButton)
+            list.appendChild(item);
         });
     
         return list;

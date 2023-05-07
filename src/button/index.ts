@@ -3,12 +3,13 @@ import { CommonElement } from "../../external/commonwealth/index";
 class ButtonComponent extends CommonElement {
     constructor(info: any) {
         super(info)
+        this.initialize()
     }
 
     // grade: string = 'Unknown' // NOTE: This cannot be overwritten?
 
     // NOTE: Need a trigger so the chain is run
-    onClick(trigger: any) {
+    onClick(trigger?: any) {
         return this.grade
     }
 

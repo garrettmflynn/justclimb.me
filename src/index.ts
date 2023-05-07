@@ -1,39 +1,21 @@
-import { Commons, createEffect } from '../external/commonwealth/index.js'
-import ButtonComponent from './button/index.js'
-import HistoryComponent from './history/index.js'
 
-// import EntriesComponent from './list/index.js'
-// const todoComponent = new EntriesComponent()
-// document.body.appendChild(todoComponent)
+import PageComponent from './pages/index.js'
+import { ScorePage } from './pages/score'
+import { SettingsPage } from './pages/settings'
+import { HistoryPage } from './pages/history'
 
-const scoreElement = document.querySelector('#score') as HTMLHeadingElement
-const historyContainer = document.querySelector('#history') as HTMLDivElement
-const buttonContainer = document.querySelector('#buttons') as HTMLDivElement
 
-const historyElement = new HistoryComponent()
+const scorePage = new ScorePage()
+const settingsPage = new SettingsPage()
+const historyPage = new HistoryPage()
 
-const grades = Array.from({length: 18}, (_, i) => `V${i}`)
-const buttons = grades.map(grade => new ButtonComponent({ grade }))
-
-buttonContainer.append(...buttons)
-historyContainer.appendChild(historyElement)
-
-const commons = new Commons()
-
-let instantiated = false
-buttons.forEach(o => {
-    commons.add(`${o.grade}Clicked`, () => {
-        const value = o.onClick() // Will get every time it is run
-        if (instantiated) {
-            historyElement.addToday(value)
-        }
-    })
+const pageElement = new PageComponent({
+    header: 'JustClimb',
+    pages: [
+        { label: 'Score', element: scorePage }, // NOTE: Cannot be in an object, since this will try iterating through the page
+        { label: 'History', element: historyPage},
+        { label: 'Settings', element: settingsPage}
+    ]
 })
 
-instantiated = true
-
-createEffect(() => {
-    const scores = historyElement.latest.map(o => new Number(o.value.slice('1')))
-    const score = scores.reduce((acc, v) => acc + v + 1, 0)
-    scoreElement.innerHTML = score
-})
+document.body.append(pageElement)
