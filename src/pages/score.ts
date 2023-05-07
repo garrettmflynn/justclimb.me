@@ -3,7 +3,7 @@ import ButtonComponent from '../button/index.js'
 import HistoryComponent from '../history/index.js'
 import { getScore } from '../metrics.js'
 import { defaultGradeRange } from './settings.js'
-
+import * as colors from '../colors'
 
 export class ScorePage extends CommonElement {
 
@@ -26,6 +26,7 @@ export class ScorePage extends CommonElement {
         const buttons = grades.map(grade => {
             const gradeEl = new ButtonComponent({ grade })
             gradeEl.classList.add('grade')
+            gradeEl.style.setProperty('--accent-color', colors[grade])
             return gradeEl
         })
 

@@ -4,6 +4,9 @@ class ButtonComponent extends CommonElement {
     constructor(info: any) {
         super(info)
         this.initialize()
+
+        this.style.touchAction = 'manipulation'
+        this.addEventListener("click", () => this.onClick(true))
     }
 
     // grade: string = 'Unknown' // NOTE: This cannot be overwritten?
@@ -13,16 +16,15 @@ class ButtonComponent extends CommonElement {
         return this.grade
     }
 
-    button () {
-        const button = document.createElement("button")
-        button.textContent = this.grade
-        button.addEventListener("click", () => this.onClick(true))
-        return button
+    text () {
+        const text = document.createElement("div")
+        text.textContent = this.grade
+        return text
     }
 
     render() {
         return [
-            this.button
+            this.text
         ]
     }
 }
