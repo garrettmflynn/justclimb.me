@@ -25,8 +25,19 @@ export class ScorePage extends CommonElement {
         const grades = Array.from({length: parseInt(range) + 1}, (_, i) => `V${i}`)
         const buttons = grades.map(grade => {
             const gradeEl = new ButtonComponent({ grade })
-            gradeEl.classList.add('grade')
-            gradeEl.style.setProperty('--accent-color', colors[grade])
+            gradeEl.classList.add('grade', grade)
+
+            const color = colors[grade]
+            const saturation = parseInt(colors[grade].split(',')[2].slice(0, -2).trim())
+            const textColor = saturation <= 60 ? 'white' : 'black'
+            gradeEl.style.setProperty('--accent-color', color)
+            gradeEl.style.setProperty('--text-color', textColor)
+
+            const randomPercentages = Array.from({length: 10}, () => `${Math.floor(30 + 70 * Math.random())}%`)
+            randomPercentages.forEach((pct, i) => {
+                gradeEl.style.setProperty(`--random-percent-${i}`, pct)
+            })
+
             return gradeEl
         })
 

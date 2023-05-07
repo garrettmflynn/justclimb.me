@@ -66,28 +66,27 @@ li:last-of-type {
     height: 150px;
     position: relative;
     overflow: hidden;
-}
-
-.grade div::after {
-    position: absolute;
-    bottom: -50%;
-    right: -50%;
-    content: ' ';
-    border-radius: 94% 31% 30% 67% / 67% 37% 56% 34%;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: whitesmoke;
+    cursor: pointer;
+    border-radius: var(--random-percent-1, 94%) var(--random-percent-2, 31%) var(--random-percent-3, 30%) var(--random-percent-4, 67%) / var(--random-percent-5, 67%) var(--random-percent-6, 37%) var(--random-percent-7, 56%) var(--random-percent-8, 34%);
     width: 250px;
     height: 250px;
     box-shadow: -10vmin 10vmin 0 rgba(255,255,255,0.07);
     background: var(--accent-color);
+    color: var(--text-color);
+    border: 1px solid gray;
+}
+
+.V3, .V4, .V7, .V8 {
+    color: black;
 }
 
 .grade > * {
-    border: 1px solid black;
-    border-radius: 10px;
     flex-grow: 1;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
-    background: whitesmoke;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
