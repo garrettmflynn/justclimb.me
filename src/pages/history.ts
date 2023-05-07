@@ -5,6 +5,7 @@ import { get } from '../storage.js'
 import * as colors from '../colors'
 
 import 'https://cdn.plot.ly/plotly-2.20.0.min.js' // Use plotly
+import { getScore } from '../metrics.js'
 
 export class HistoryPage extends CommonElement {
 
@@ -13,19 +14,19 @@ export class HistoryPage extends CommonElement {
         super(info)
     }
 
-    entries() {
+    dates() {
         return Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i ))
         .filter(str => str?.split('-').length === 3)
         .sort((o1,o2) => new Date(o2) - new Date(o1)) as string[] // Sort dates chronologically
     }
-
-
-    plot() {
-        const dates = this.entries()
+    
+    
+    getSplit(reverse = false) {
+        const dates = reverse ? [...this.dates()].reverse() : this.dates()
         const entries = dates.map(date => get(date))
 
         let grades: string[] = []
-        let gradeSplit = entries.map((arr, i) => {
+        let split = entries.map((arr, i) => {
             
             const acc: any = {}
             arr.forEach(o => {
@@ -37,12 +38,78 @@ export class HistoryPage extends CommonElement {
             return acc
         }, {})
 
+        return {
+            dates,
+            grades,
+            split
+        }
+    }
+
+    score() {
+        // const { grades, split } = this.getSplit()
+        const dates = [...this.dates()].reverse() //.reverse()
+        const entries = dates.map(date => get(date))
+        const scores = entries.map(getScore)
+        const averages = entries.map(arr => arr.reduce((acc, e) => acc + parseInt(e.value.slice(1)), 0) / arr.length)
+
+        const scoreLine = {
+            x: dates,
+            y: scores,
+            name: 'Total Score',
+            mode: 'lines',
+            line: {
+                color: 'black',
+                width: 2
+            }
+          }
+
+        const averageLine = {
+            x: dates,
+            y: averages,
+            name: 'Average Difficulty',
+            yaxis: 'y2',
+            mode: 'lines',
+            line: {
+                color: 'darkgray',
+                width: 1
+            }
+          }
+
+
+          var layout = { 
+            type: 'scatter',
+            mode: 'lines',
+            title: 'Score Overview',
+            xaxis: {
+                type: 'category',
+            },
+            yaxis: {
+                // title: scoreLine.name,
+                rangemode: 'tozero'
+            },
+            yaxis2: {
+                // title: averageLine.name,
+                overlaying: 'y',
+                side: 'right',
+                rangemode: 'tozero'
+              }
+        };
+
+          const div = document.createElement('div')
+          
+          setTimeout(() => Plotly.newPlot(div, [ scoreLine , averageLine ], layout, {responsive: true}), 10);
+          return div
+    }
+
+    grades() {
+        const { grades, split, dates } = this.getSplit(true)
+
         const data = grades.sort((a,b) => {
             return parseInt(a.slice(1)) - parseInt(b.slice(1))
         }).map((v) => {
             return {
                 x: dates,
-                y: gradeSplit.map(o => o[v] || 0),
+                y: split.map(o => o[v] || 0),
                 name: v,
                 marker: {
                     color: colors[v]
@@ -54,10 +121,9 @@ export class HistoryPage extends CommonElement {
 
           var layout = { 
             barmode: 'stack', 
-            title: 'Climb History',
+            title: 'Grade Breakdown',
             xaxis: {
                 type: 'category',
-                title: 'Date',
             },
             yaxis: {
                 title: '# of Climbs'
@@ -66,12 +132,12 @@ export class HistoryPage extends CommonElement {
 
           const div = document.createElement('div')
           
-          setTimeout(() => Plotly.newPlot(div, data, layout), 10);
+          setTimeout(() => Plotly.newPlot(div, data, layout, {responsive: true}), 10);
           return div
     }
 
     list() {
-        const dates = this.entries()
+        const dates = this.dates()
         const container = document.createElement('div')
 
         container.append(...dates.map(date => {
@@ -106,7 +172,8 @@ export class HistoryPage extends CommonElement {
     render() {
         
         return [
-            this.plot,
+            this.score,
+            this.grades,
             this.list,
         ]
         

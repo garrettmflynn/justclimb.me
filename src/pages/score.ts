@@ -1,6 +1,7 @@
 import { CommonElement, Commons } from '../../external/commonwealth/index.js'
 import ButtonComponent from '../button/index.js'
 import HistoryComponent from '../history/index.js'
+import { getScore } from '../metrics.js'
 import { defaultGradeRange } from './settings.js'
 
 
@@ -54,8 +55,7 @@ export class ScorePage extends CommonElement {
         h3.style.textAlign = 'center'
 
         const history = this.history()
-        const scores = history.latest.map(o => parseInt(o.value.slice(1)))
-        const score = scores.reduce((acc, v) => acc + v + 1, 0)
+        const score = getScore(history.latest)
         h3.innerText = `${score}`
         return h3
     }

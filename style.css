@@ -13,6 +13,7 @@ nav {
     justify-content: space-between;
     padding: 0px 25px;
     border-bottom: 1px solid gray;
+    z-index: 100;
 
     background: black;
     color: white;
