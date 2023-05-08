@@ -4,6 +4,7 @@ import HistoryComponent from '../history/index.js'
 import { getScore } from '../metrics.js'
 import { defaultGradeRange } from './settings.js'
 import * as colors from '../colors'
+import { getItem } from '../storage.js'
 
 export class ScorePage extends CommonElement {
 
@@ -18,7 +19,7 @@ export class ScorePage extends CommonElement {
 
     buttons = () => {
 
-        let range = localStorage.getItem('gradeRange') || defaultGradeRange
+        let range = getItem('gradeRange') || defaultGradeRange
         const container = document.createElement('div')
         container.classList.add('grades')
 

@@ -4,6 +4,8 @@ export type EntryType = {
 }
 
 
+var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+
 export const get = (key?: string): EntryType[] => {
     if (!key) return []
     let entries = localStorage.getItem(key) || []
@@ -11,10 +13,26 @@ export const get = (key?: string): EntryType[] => {
     else return JSON.parse(entries)
 }
 
+
+export const getAllKeys = () => {
+    return Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i ))
+}
+
+export const clear = (key?: string) => {
+    return localStorage.clear()
+}
+
+export const setItem = (key: string, value: string) => {
+    return localStorage.setItem(key, value)
+}
+export const getItem = (key: string) => {
+    return localStorage.getItem(key)
+}
+
 export const set = (key: string, entries: any | any[]) => {
     localStorage.setItem(key, JSON.stringify(entries))
 }
 
-export const today = () => new Date().toISOString().split('T')[0]
+export const today = () => new Date(Date.now() - tzoffset).toISOString().split('T')[0]
 
 export const getToday = () => get(today())

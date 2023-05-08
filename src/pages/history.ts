@@ -1,6 +1,6 @@
 import { CommonElement } from '../../external/commonwealth/index.js'
 import listItem from '../components/li.js'
-import { get } from '../storage.js'
+import { get, getAllKeys } from '../storage.js'
 
 import * as colors from '../colors'
 
@@ -15,8 +15,13 @@ export class HistoryPage extends CommonElement {
     }
 
     dates() {
-        return Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i ))
-        .filter(str => str?.split('-').length === 3)
+        return getAllKeys()
+        .filter(str => {
+            try {
+                const date = new Date(str)
+                return date instanceof Date && !isNaN(date);
+            } catch {}
+        })
         .sort((o1,o2) => new Date(o2) - new Date(o1)) as string[] // Sort dates chronologically
     }
     
