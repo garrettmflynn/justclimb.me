@@ -15,8 +15,24 @@ class PageComponent extends CommonElement {
 
     nav () {
         const nav = document.createElement('nav')
+
+        const headerContainer = document.createElement('div')
+
         const header = document.createElement('h2')
         header.innerText = this.header
+
+        const score = document.createElement('span')
+        score.id = 'score'
+
+        const sep = document.createElement('span')
+        sep.innerText = ' — '
+
+        header.append(sep, score)
+
+        const subscore = document.createElement('small')
+        subscore.id = 'subscore'
+
+        headerContainer.append(header, subscore)
 
         const params = new URLSearchParams(window.location.search)
         const active = params.get('page')
@@ -46,7 +62,7 @@ class PageComponent extends CommonElement {
 
         links.append(...linkEls)
 
-        nav.append(header, links)
+        nav.append(headerContainer, links)
 
         return nav
     }

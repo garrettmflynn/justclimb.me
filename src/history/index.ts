@@ -1,8 +1,9 @@
 // import * as todo from './funcs'
 import { CommonElement } from "../../external/commonwealth/index";
-import { listItem } from "../components/li";
 import { EntryType } from "../storage";
 import * as storage from '../storage'
+import list from '../components/list'
+
 
 class HistoryComponent extends CommonElement {
     constructor(info?: any) {
@@ -35,28 +36,20 @@ class HistoryComponent extends CommonElement {
     latest: EntryType[] = [] // Can listen for the latest entries
 
     list(trigger: any) {
-        const list = document.createElement("ul");
+        
+        const today = storage.today()
+        const entries = this.latest = storage.getToday()
 
-        const currentEntries = this.latest = storage.getToday()
-
-        list.innerHTML = "";
-        currentEntries.forEach((entry, index) => {
-            const item = listItem(entry)
-
-            const deleteButton = document.createElement('button')
-            deleteButton.innerHTML = 'Delete'
-            deleteButton.style.marginLeft = '10px'
-            deleteButton.onclick = () => {
-                currentEntries.splice(index, 1)
-                storage.set(storage.today(), currentEntries) 
+        const res = list({
+            entries,
+            onDelete: (_, __, entries) => {
+                if (entries.length) storage.set(today, entries) 
+                else storage.remove(today)
                 this.list(true) // Trigger a re-render of the list           
             }
-
-            item.appendChild(deleteButton)
-            list.appendChild(item);
         });
-    
-        return list;
+
+        return res
     }
 
     render() {

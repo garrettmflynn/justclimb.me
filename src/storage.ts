@@ -18,8 +18,13 @@ export const getAllKeys = () => {
     return Array.from({ length: localStorage.length }, (_, i) => localStorage.key( i ))
 }
 
-export const clear = (key?: string) => {
+export const clear = () => {
     return localStorage.clear()
+}
+
+export const remove = (key: string) => {
+    console.error('REMOVE!')
+    localStorage.removeItem(key)
 }
 
 export const setItem = (key: string, value: string) => {

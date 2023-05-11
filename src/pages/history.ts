@@ -3,9 +3,11 @@ import listItem from '../components/li.js'
 import { get, getAllKeys } from '../storage.js'
 
 import * as colors from '../colors'
+import * as storage from '../storage'
 
 import 'https://cdn.plot.ly/plotly-2.20.0.min.js' // Use plotly
-import { getScore } from '../metrics.js'
+import { getScore, getAverageGrade } from '../metrics.js'
+import list from '../components/list.js'
 
 export class HistoryPage extends CommonElement {
 
@@ -155,18 +157,18 @@ export class HistoryPage extends CommonElement {
             header.innerText = date
 
             const description = document.createElement('small')
-            const averageGrade = entries.reduce((acc, e) => acc + parseInt(e.value.slice(1)), 0) / entries.length
+            const averageGrade = getAverageGrade(entries)
             description.innerText = `${entries.length} climbs @ V${averageGrade.toFixed(1)}`
 
-            const list = document.createElement('ul')
-
-            entries.forEach(entry => {
-                const li = listItem(entry)
-                list.append(li)
+            const el = list({
+                entries,
+                onDelete: (_, __, entries) => {
+                    if (entries.length) storage.set(date, entries) 
+                    else storage.remove(date)
+                }
             })
 
-
-            container.append(header, description, list)
+            container.append(header, description, el)
             return container
         }))
         

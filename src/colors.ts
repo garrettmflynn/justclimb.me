@@ -1,16 +1,16 @@
 
-export const V0 = 'hsl(322, 80%, 60%)'
+export const V0 = 'hsl(308, 100%, 71%)'
 
 export const V1 = 'hsl(322, 0%, 94%)'
 export const V2 = 'hsl(322, 0%, 94%)'
-export const V3 = 'hsl(60, 80%, 60%)'
-export const V4 = 'hsl(60, 80%, 60%)'
-export const V5 = 'hsl(237, 80%, 60%)'
-export const V6 = 'hsl(237, 80%, 60%)'
-export const V7 = 'hsl(114, 80%, 60%)'
-export const V8 = 'hsl(114, 80%, 60%)'
-export const V9 = 'hsl(0, 80%, 60%)'
-export const V10 = 'hsl(17, 80%, 60%)'
+export const V3 = 'hsl(199, 100%, 58%)'
+export const V4 = 'hsl(199, 100%, 58%)'
+export const V5 = 'hsl(209, 100%, 65%)'
+export const V6 = 'hsl(209, 100%, 65%)'
+export const V7 = 'hsl(184, 100%, 31%)'
+export const V8 = 'hsl(184, 100%, 31%)'
+export const V9 = 'hsl(12, 100%, 69%)'
+export const V10 = 'hsl(15, 100%, 74%)'
 
 // Black
 export const V11 = 'hsl(0, 0%, 40%)'

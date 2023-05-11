@@ -1,7 +1,7 @@
 import { CommonElement, Commons } from '../../external/commonwealth/index.js'
 import ButtonComponent from '../button/index.js'
 import HistoryComponent from '../history/index.js'
-import { getScore } from '../metrics.js'
+import { getAverageGrade, getScore } from '../metrics.js'
 import { defaultGradeRange } from './settings.js'
 import * as colors from '../colors'
 import { getItem } from '../storage.js'
@@ -24,9 +24,10 @@ export class ScorePage extends CommonElement {
         container.classList.add('grades')
 
         const grades = Array.from({length: parseInt(range) + 1}, (_, i) => `V${i}`)
-        const buttons = grades.map(grade => {
+        const buttons = grades.map((grade, i) => {
             const gradeEl = new ButtonComponent({ grade })
             gradeEl.classList.add('grade', grade)
+            gradeEl.setAttribute('tabindex', `${i}`)
 
             const color = colors[grade]
             const saturation = parseInt(colors[grade].split(',')[2].slice(0, -2).trim())
@@ -61,22 +62,21 @@ export class ScorePage extends CommonElement {
     }
 
     score() {
-        const h3 = document.createElement('h3')
-        h3.style.fontSize = '100px'
-        h3.style.margin = '0'
-        h3.style.marginBottom = '20px'
-        h3.style.textAlign = 'center'
+        const el = document.getElementById('score') as HTMLSpanElement
+        const subel = document.getElementById('subscore') as HTMLElement
 
-        const history = this.history()
-        const score = getScore(history.latest)
-        h3.innerText = `${score}`
-        return h3
+        const { latest: entries } = this.history()
+        
+        const score = getScore(entries)
+        el.innerText = `${score}`
+        subel.innerText =  `${entries.length} Climbs @ V${getAverageGrade(entries).toFixed(2)}`
+        // return div
     }
 
     render() {
         
         return [
-            this.score,
+            // this.score,
             this.buttons,
             this.history
         ]
