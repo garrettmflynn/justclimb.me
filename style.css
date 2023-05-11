@@ -1,12 +1,19 @@
 html, body {
     margin: 0;
     font-family: sans-serif;
-    background: black;
-    color: white;
+    /* background: black;
+    color: white; */
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 section {
     padding: 25px;
+}
+
+page-component > *:nth-child(2) {
+    position: relative;
+    overflow: auto;
 }
 
 nav {
@@ -29,9 +36,17 @@ nav h2 {
     margin-right: 10px;
 }
 
-nav > *:first-child {
-    /* display: flex; */
-    /* align-items: center; */
+.score {
+    position: sticky;
+    top: 0;
+    padding: 25px;
+    /* background: black; */
+    background: rgb(237, 237, 237);
+    z-index: 100;
+}
+
+.score h2 {
+    margin: 0;
 }
 
 a:visited {
@@ -68,17 +83,15 @@ li:last-of-type {
 .grades {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .grade {
-    /* aspect-ratio: 1 / 1; */
     margin: 10px;
-    flex: 1 0 auto;
     display: flex;
     height: 150px;
     position: relative;
     overflow: hidden;
-    border: 1px solid black;
     border-radius: 10px;
     background: whitesmoke;
     cursor: pointer;
@@ -86,22 +99,22 @@ li:last-of-type {
     width: 150px;
     height: 150px;
     background: var(--accent-color);
-    color: var(--text-color);
-    border: 1px solid gray;
+    color: white; /* var(--text-color); */
     animation: ease-in 2s;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.39);
+
 }
 
 .grade:active {
     filter: brightness(0.5);
 }
 
-.V3, .V4, .V7, .V8 {
-    color: black;
-}
 
 .grade > * {
     flex-grow: 1;
     font-size: 30px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.39);
+
     font-weight: bold;
     display: flex;
     align-items: center;

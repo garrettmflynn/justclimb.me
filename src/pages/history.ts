@@ -176,6 +176,8 @@ export class HistoryPage extends CommonElement {
         return container
     }
 
+    
+
     render() {
         
         return [

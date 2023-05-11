@@ -1,4 +1,5 @@
 import { CommonElement } from "../../external/commonwealth/index";
+import { getAverageGrade, getScore } from "../metrics";
 
 type PageType = {
     label: string,
@@ -11,28 +12,18 @@ class PageComponent extends CommonElement {
 
     constructor(info: any) {
         super(info)
+
+        this.style.display = 'grid'
+        this.style.gridTemplateColumns = '1fr'
+        this.style.gridTemplateRows = 'auto 1fr'
+        this.style.height = '100vh'
     }
 
     nav () {
         const nav = document.createElement('nav')
 
-        const headerContainer = document.createElement('div')
-
         const header = document.createElement('h2')
         header.innerText = this.header
-
-        const score = document.createElement('span')
-        score.id = 'score'
-
-        const sep = document.createElement('span')
-        sep.innerText = ' — '
-
-        header.append(sep, score)
-
-        const subscore = document.createElement('small')
-        subscore.id = 'subscore'
-
-        headerContainer.append(header, subscore)
 
         const params = new URLSearchParams(window.location.search)
         const active = params.get('page')
@@ -62,12 +53,12 @@ class PageComponent extends CommonElement {
 
         links.append(...linkEls)
 
-        nav.append(headerContainer, links)
+        nav.append(header, links)
 
         return nav
     }
 
-    #body = document.createElement("section")
+    #body = document.createElement("div")
     body = () => this.#body
 
     render() {

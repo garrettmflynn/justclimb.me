@@ -42,22 +42,9 @@ export class SettingsPage extends CommonElement {
 
     }
 
-    clear() {
-        const button = document.createElement('button')
-        button.innerText = 'Clear All History (MAKE SURE YOU WANT THIS)'
-        button.onclick = () => {
-            clear()
-            // this.onClear(true)
-            window.location.reload() // Reload the page because pages aren't responsive to a clear event
-        }
-
-        return button
-    }
-
     render() {
         
         return [
-            this.clear,
             this.range
         ]
         

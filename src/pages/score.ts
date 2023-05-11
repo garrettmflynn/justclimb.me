@@ -62,23 +62,36 @@ export class ScorePage extends CommonElement {
     }
 
     score() {
-        const el = document.getElementById('score') as HTMLSpanElement
-        const subel = document.getElementById('subscore') as HTMLElement
+        const container = document.createElement('div')
+        container.classList.add('score')
+        const el = document.createElement('h2') as HTMLHeadingElement
+        const subel = document.createElement('small') as HTMLElement
+        container.append(el, subel)
 
         const { latest: entries } = this.history()
         
         const score = getScore(entries)
         el.innerText = `${score}`
         subel.innerText =  `${entries.length} Climbs @ V${getAverageGrade(entries).toFixed(2)}`
-        // return div
+
+        return container
+    }
+
+    section() {
+        const el = document.createElement('section')
+        const buttons = this.buttons()
+        const history = this.history()
+        el.append(buttons, history)
+        return el
     }
 
     render() {
         
         return [
-            // this.score,
-            this.buttons,
-            this.history
+            this.score,
+            this.section
+            // this.buttons,
+            // this.history
         ]
         
     }
