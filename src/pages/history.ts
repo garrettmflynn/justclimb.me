@@ -158,7 +158,7 @@ export class HistoryPage extends CommonElement {
 
             const description = document.createElement('small')
             const averageGrade = getAverageGrade(entries)
-            description.innerText = `${entries.length} climbs @ V${averageGrade.toFixed(1)}`
+            description.innerText = entries.length ? `${entries.length} climbs @ V${averageGrade.toFixed(1)}` : `No Climbs`
 
             const el = list({
                 entries,
@@ -176,7 +176,7 @@ export class HistoryPage extends CommonElement {
         return container
     }
 
-    
+
 
     render() {
         
