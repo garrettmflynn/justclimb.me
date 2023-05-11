@@ -16,7 +16,7 @@ class PageComponent extends CommonElement {
         this.style.display = 'grid'
         this.style.gridTemplateColumns = '1fr'
         this.style.gridTemplateRows = 'auto 1fr'
-        this.style.height = '100vh'
+        this.style.height = '100%'
     }
 
     nav () {

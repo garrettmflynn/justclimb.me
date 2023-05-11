@@ -6,6 +6,7 @@ html, body {
     overflow: hidden;
     box-sizing: border-box;
     overscroll-behavior-y: none;
+    height: 100%;
 }
 
 section {
