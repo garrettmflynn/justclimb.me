@@ -5,6 +5,7 @@ html, body {
     color: white; */
     overflow: hidden;
     box-sizing: border-box;
+    overscroll-behavior-y: none;
 }
 
 section {
@@ -14,6 +15,7 @@ section {
 page-component > *:nth-child(2) {
     position: relative;
     overflow: auto;
+    overscroll-behavior-y: none;
 }
 
 nav {
@@ -89,15 +91,14 @@ li:last-of-type {
 .grade {
     margin: 10px;
     display: flex;
-    height: 150px;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
     background: whitesmoke;
     cursor: pointer;
     border-radius: var(--random-percent-1, 94%) var(--random-percent-2, 31%) var(--random-percent-3, 30%) var(--random-percent-4, 67%) / var(--random-percent-5, 67%) var(--random-percent-6, 37%) var(--random-percent-7, 56%) var(--random-percent-8, 34%);
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
     background: var(--accent-color);
     color: white; /* var(--text-color); */
     animation: ease-in 2s;
