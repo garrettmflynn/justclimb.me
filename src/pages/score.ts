@@ -4,7 +4,9 @@ import HistoryComponent from '../history/index.js'
 import { getAverageGrade, getScore } from '../metrics.js'
 import { defaultGradeRange } from './settings.js'
 import * as colors from '../colors'
-import { getItem } from '../storage.js'
+import { EntryType, getItem } from '../storage.js'
+
+import globals from '../globals'
 
 export class ScorePage extends CommonElement {
 
@@ -61,20 +63,25 @@ export class ScorePage extends CommonElement {
         return container
     }
 
-    score() {
+    // Get local latest as the default
+    score(entries: EntryType[] = []) {
         const container = document.createElement('div')
         container.classList.add('score')
         const el = document.createElement('h2') as HTMLHeadingElement
         const subel = document.createElement('small') as HTMLElement
         container.append(el, subel)
-
-        const { latest: entries } = this.history()
-        
         const score = getScore(entries)
+        
         el.innerText = `${score}`
         subel.innerText =  `${entries.length} Climbs @ V${getAverageGrade(entries).toFixed(2)}`
 
         return container
+    }
+    
+    $latestScoreAndGlobals() {
+        const { latest: entries } = this.history()
+        this.score(entries) // Update local score
+        globals.latest = entries // Update global latest + score
     }
 
     section() {

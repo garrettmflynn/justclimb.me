@@ -25,7 +25,7 @@ class HistoryComponent extends CommonElement {
             })
 
             storage.set(key, entries)   
-            this.list(true) // Trigger a re-render of the list         
+            this.latest = storage.getToday() // Trigger a re-render of the list         
         }
     }
 
@@ -33,23 +33,24 @@ class HistoryComponent extends CommonElement {
         this.add(storage.today(), value)
     }
 
-    latest: EntryType[] = [] // Can listen for the latest entries
+    latest: EntryType[] = storage.getToday() // Can listen for the latest entries
 
-    list(trigger: any) {
+    list(entries: EntryType[] = []) {
         
-        const today = storage.today()
-        const entries = this.latest = storage.getToday()
-
         const res = list({
             entries,
             onDelete: (_, __, entries) => {
                 if (entries.length) storage.set(today, entries) 
                 else storage.remove(today)
-                this.list(true) // Trigger a re-render of the list           
+                this.latest = storage.getToday()  // Trigger a re-render of the list
             }
         });
 
         return res
+    }
+
+    $latestList() {
+        this.list(this.latest)
     }
 
     render() {
