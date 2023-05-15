@@ -6,9 +6,10 @@ import list from '../components/list'
 
 
 class HistoryComponent extends CommonElement {
-    constructor(info?: any) {
+constructor(info?: any) {
         super(info)
         this.latest = storage.getToday()
+        this.initialize()
     }
 
     get = storage.get
@@ -40,6 +41,7 @@ class HistoryComponent extends CommonElement {
         const res = list({
             entries,
             onDelete: (_, __, entries) => {
+                const today = storage.today()
                 if (entries.length) storage.set(today, entries) 
                 else storage.remove(today)
                 this.latest = storage.getToday()  // Trigger a re-render of the list

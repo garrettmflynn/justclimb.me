@@ -1,27 +1,24 @@
 import { CommonElement, Commons } from '../../external/commonwealth/index.js'
-import ButtonComponent from '../button/index.js'
+import ButtonComponent from '../components/button/index.js'
 import HistoryComponent from '../history/index.js'
 import { getAverageGrade, getScore } from '../metrics.js'
-import { defaultGradeRange } from './settings.js'
 import * as colors from '../colors'
-import { EntryType, getItem } from '../storage.js'
-
-import globals from '../globals'
+import { EntryType } from '../storage.js'
+import { getRange } from '../globals.js'
 
 export class ScorePage extends CommonElement {
 
-    #history = new HistoryComponent()
+    history = new HistoryComponent()
 
     constructor(info?: any) {
         super(info)
-        this.#history.initialize() // Ensures score will propertly re-render
+        this.initialize()
     }
 
-    history = () => this.#history // Only ever render the same component (fixes re-rendering issue)
+    // history = () => this.#history // Only ever render the same component (fixes re-rendering issue)
 
-    buttons = () => {
+    buttons (range = getRange()) {
 
-        let range = getItem('gradeRange') || defaultGradeRange
         const container = document.createElement('div')
         container.classList.add('grades')
 
@@ -48,11 +45,10 @@ export class ScorePage extends CommonElement {
         const commons = new Commons()
 
         let instantiated = false
-        const history = this.history()
         buttons.forEach(o => {
             commons.add(`${o.grade}Clicked`, () => {
                 const value = o.onClick() // Will get every time it is run
-                if (instantiated) history.addToday(value)
+                if (instantiated) this.history.addToday(value)
             })
         })
 
@@ -65,30 +61,22 @@ export class ScorePage extends CommonElement {
 
     // Get local latest as the default
     score(entries: EntryType[] = []) {
+        this.history.list(entries)
         const container = document.createElement('div')
         container.classList.add('score')
         const el = document.createElement('h2') as HTMLHeadingElement
         const subel = document.createElement('small') as HTMLElement
         container.append(el, subel)
         const score = getScore(entries)
-        
         el.innerText = `${score}`
         subel.innerText =  `${entries.length} Climbs @ V${getAverageGrade(entries).toFixed(2)}`
-
         return container
-    }
-    
-    $latestScoreAndGlobals() {
-        const { latest: entries } = this.history()
-        this.score(entries) // Update local score
-        globals.latest = entries // Update global latest + score
     }
 
     section() {
         const el = document.createElement('section')
         const buttons = this.buttons()
-        const history = this.history()
-        el.append(buttons, history)
+        el.append(buttons, this.history)
         return el
     }
 

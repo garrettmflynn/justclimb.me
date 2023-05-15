@@ -14,6 +14,7 @@ export class HistoryPage extends CommonElement {
 
     constructor(info?: any) {
         super(info)
+        this.initialize()
     }
 
     dates() {
@@ -143,6 +144,18 @@ export class HistoryPage extends CommonElement {
           return div
     }
 
+    onDelete(date: string, entries: storage.EntryType[] = []) {
+        if (date) {
+            if (entries.length) storage.set(date, entries) 
+            else storage.remove(date)
+
+            return {
+                date, 
+                entries
+            }
+        } else return {}
+    }
+
     list() {
         const dates = this.dates()
         const container = document.createElement('div')
@@ -162,10 +175,7 @@ export class HistoryPage extends CommonElement {
 
             const el = list({
                 entries,
-                onDelete: (_, __, entries) => {
-                    if (entries.length) storage.set(date, entries) 
-                    else storage.remove(date)
-                }
+                onDelete: (_, __, entries) => this.onDelete(date, entries)
             })
 
             container.append(header, description, el)

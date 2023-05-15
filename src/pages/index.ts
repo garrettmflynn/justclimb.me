@@ -37,9 +37,8 @@ class PageComponent extends CommonElement {
 
             const path = label.toLowerCase()
             a.onclick = () => {
-                const body = this.body()
-                const child = body.children[0]
-                if (!child) body.append(element)
+                const child = this.body.children[0]
+                if (!child) this.body.append(element)
                 else child.replaceWith(element)
                 window.history.pushState({}, '', `?page=${path}`)
             }
@@ -58,8 +57,7 @@ class PageComponent extends CommonElement {
         return nav
     }
 
-    #body = document.createElement("div")
-    body = () => this.#body
+    body = document.createElement("div")
 
     render() {
         

@@ -1,4 +1,4 @@
-import { CommonElement } from "../../external/commonwealth/index";
+import { CommonElement } from "../../../external/commonwealth/index";
 
 class ButtonComponent extends CommonElement {
     constructor(info: any) {

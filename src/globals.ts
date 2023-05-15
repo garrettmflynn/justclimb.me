@@ -1,21 +1,19 @@
-import { Commons, createEffect } from "../external/commonwealth";
+import { Commons } from "../external/commonwealth";
 import { getScore } from "./metrics";
+import { getItem, setItem } from "./storage";
 // import { EntryType } from "./storage";
 
+const defaultGradeRange = '7'
+export const getRange = () => getItem('gradeRange') || defaultGradeRange
+export const setRange = (v) => setItem('gradeRange', v)
 
-const store = {
-    score: 0,
-    // latest: [] // NOTE: Cannot be set here
-}
-
-const globals = new Commons(store)
-globals.add('latest', [])
-globals.add('score', function() {
+export const globalCommons = new Commons()
+globalCommons.add('latest', [])
+globalCommons.add('score', function() {
     return getScore(this.latest) // Automatically translate latest array into a score
 })
 
-createEffect(() => {
-    console.log('Score changed', globals.nodes.score())
-})
+globalCommons.add('range', getRange())
 
-export default globals.nodes
+
+export default globalCommons.nodes

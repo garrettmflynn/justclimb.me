@@ -1,18 +1,17 @@
 import { CommonElement } from '../../external/commonwealth/index.js'
-import { clear, getItem, setItem } from '../storage.js'
-
-export const defaultGradeRange = '7'
-
-const get = () => getItem('gradeRange') || defaultGradeRange
-const set = (v) => setItem('gradeRange', v)
+import { getRange, setRange } from '../globals.js'
 
 export class SettingsPage extends CommonElement {
 
 
     constructor(info?: any) {
         super(info)
+        this.initialize()
+        setRange(getRange())
+    }
 
-        set(get())
+    onRangeUpdate(value: string) {
+        return value
     }
 
     range () {
@@ -23,21 +22,10 @@ export class SettingsPage extends CommonElement {
         slider.type = 'range'
         slider.min = '0'
         slider.max = '17'
-        
-
-        slider.oninput = () => {
-            readout.innerHTML = slider.value; // Display the slider value
-            setItem('gradeRange', slider.value)
-        }
-
-        slider.onchange = () => window.location.reload() // No mechanism for updating other pages
-
-        readout.innerHTML = slider.value = get()
-
-
-
+        slider.oninput = () => readout.innerHTML = slider.value; // Display the slider value
+        slider.onchange = () => this.onRangeUpdate(parseInt(slider.value))
+        readout.innerHTML = slider.value = getRange()
         container.append(slider, readout)
-
         return container
 
     }
