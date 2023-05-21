@@ -8,7 +8,6 @@ import './globals'
 import { globalCommons } from './globals'
 import { setItem, today } from './storage.js'
 
-
 const scorePage = new ScorePage()
 const settingsPage = new SettingsPage()
 const historyPage = new HistoryPage()
@@ -58,16 +57,16 @@ globalCommons.add('$onDeleteHistoryViewAndGlobal', function () {
     }
 })
 
-
-
-
-
 // Service Worker Stuff
+
 if ("serviceWorker" in navigator) {
+
+    const workerURL = `${window.location.origin}/${window.location.pathname}/serviceWorker.js`
     window.addEventListener("load", function() {
       navigator.serviceWorker
-        .register("/serviceWorker.js")
+        .register(workerURL)
         .then(res => console.log("service worker registered"))
         .catch(err => console.log("service worker not registered", err));
     });
   }
+  

@@ -1,15 +1,15 @@
 {
     "short_name": "JustClimb",
     "description": "Track your climbing performance—plain and simple",
-    "start_url": "index.html",
+    "start_url": "./index.html",
     "icons": [
       {
-        "src": "/images/justclimb-logo.png",
+        "src": "./images/justclimb-logo.png",
         "type": "image/png",
         "sizes": "512x512"
       },
       {
-        "src": "/images/justclimb-logo-192x192.png",
+        "src": "./images/justclimb-logo-192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       }
