@@ -61,7 +61,10 @@ globalCommons.add('$onDeleteHistoryViewAndGlobal', function () {
 
 if ("serviceWorker" in navigator) {
 
-    const workerURL = `${window.location.origin}/${window.location.pathname}/serviceWorker.js`
+    let pathname = window.location.pathname
+    if (pathname.includes('.html')) pathname = pathname.split('/').slice(0, -1).join('/')
+    const workerURL = `${window.location.origin}${pathname}/serviceWorker.js`
+    
     window.addEventListener("load", function() {
       navigator.serviceWorker
         .register(workerURL)
