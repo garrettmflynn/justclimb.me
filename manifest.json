@@ -1,6 +1,7 @@
 {
     "short_name": "JustClimb",
     "description": "Track your climbing performance—plain and simple",
+    "start_url": "index.html",
     "icons": [
       {
         "src": "/images/justclimb-logo.png",
@@ -15,19 +16,5 @@
     ],
     "background_color": "#3367D6",
     "display": "standalone",
-    "theme_color": "#3367D6",
-    "shortcuts": [
-      {
-        "name": "Add a new climb",
-        "short_name": "Score",
-        "description": "Manage your climbs for the day",
-        "url": "/?page=score"
-      },
-      {
-        "name": "View my climb history",
-        "short_name": "History",
-        "description": "View a history of all your climbs",
-        "url": "/?page=history"
-      }
-    ]
+    "theme_color": "#3367D6"
   }
