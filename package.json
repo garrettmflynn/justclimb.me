@@ -20,9 +20,5 @@
     "eslint-plugin-promise": "^6.0.0",
     "typescript": "*",
     "vite": "^4.2.1"
-  },
-  "dependencies": {
-    "@maverick-js/signals": "^5.10.2",
-    "solid-js": "^1.7.5"
   }
 }
