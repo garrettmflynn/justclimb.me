@@ -68,8 +68,8 @@ export class ScorePage extends CommonElement {
         const subel = document.createElement('small') as HTMLElement
         container.append(el, subel)
         const score = getScore(entries)
-        el.innerText = `${score}`
-        subel.innerText =  `${entries.length} Climbs @ V${getAverageGrade(entries).toFixed(2)}`
+        el.innerText = score
+        subel.innerText =  entries.length ? `${entries.length} Climbs @ V${getAverageGrade(entries).toFixed(2)}` : 'No Climbs Recorded'
         return container
     }
 
