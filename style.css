@@ -124,13 +124,19 @@ li:last-of-type {
 }
 
 .slider {
-    padding: 15px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
 }
 
 .slider::before { 
     content: 'Grade Range: ';
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.version::before { 
+    content: 'App Version: ';
     margin-right: 15px;
     font-weight: bold;
 }

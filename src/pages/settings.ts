@@ -1,6 +1,8 @@
 import { CommonElement } from '../../external/commonwealth/index.js'
 import { getRange, setRange } from '../globals.js'
 
+import json from '../../package.json' assert {type: 'json'}
+
 export class SettingsPage extends CommonElement {
 
 
@@ -30,11 +32,23 @@ export class SettingsPage extends CommonElement {
 
     }
 
+    version() {
+        const version = document.createElement('small')
+        version.classList.add('version')
+        version.innerText = json.version
+        return version
+    }
+
+    section() {
+        const el = document.createElement('section')
+        el.append(this.range(), this.version())
+        return el
+    }
+
+
     render() {
-        
-        return [
-            this.range
-        ]
+
+        return this.section()
         
     }
 }
