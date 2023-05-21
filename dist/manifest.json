@@ -3,12 +3,12 @@
     "description": "Track your climbing performance—plain and simple",
     "icons": [
       {
-        "src": "/assets/justclimb-logo.png",
+        "src": "/images/justclimb-logo.png",
         "type": "image/png",
         "sizes": "512x512"
       },
       {
-        "src": "/assets/justclimb-logo-192x192.png",
+        "src": "/images/justclimb-logo-192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       }
@@ -21,15 +21,13 @@
         "name": "Add a new climb",
         "short_name": "Score",
         "description": "Manage your climbs for the day",
-        "url": "/?page=score",
-        "icons": [{ "src": "/images/today.png", "sizes": "192x192" }]
+        "url": "/?page=score"
       },
       {
         "name": "View my climb history",
         "short_name": "History",
         "description": "View a history of all your climbs",
-        "url": "/?page=history",
-        "icons": [{ "src": "/images/tomorrow.png", "sizes": "192x192" }]
+        "url": "/?page=history"
       }
     ]
   }
